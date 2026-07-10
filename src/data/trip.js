@@ -18,6 +18,7 @@ export const TRIP = {
   durationDays: 5,
   dateRange: 'Mon 14 – Fri 18 Dec',
   price: '₹50,000',
+  origin: 'Bengaluru',
   days: [
     {
       label: 'Day 1 — Phuket',
@@ -47,6 +48,26 @@ export const TRIP = {
     },
   ],
 }
+
+// ── Checkout — per-person cost breakdown (items + taxes = ₹50,000) ──
+export const CHECKOUT = {
+  items: [
+    { label: 'Flights · return', sub: 'Bengaluru ⇄ Phuket', amount: 22000 },
+    { label: 'Stays · 4 nights', sub: 'Kata Beach Resort & Spa', amount: 13500 },
+    { label: 'Activities & entries', sub: '6 experiences', amount: 6000 },
+    { label: 'Local transfers', sub: 'Airport + intercity', amount: 3000 },
+    { label: 'Expert planning fee', sub: 'Vetted by Linh', amount: 499 },
+  ],
+  taxes: 5001,
+}
+export const fmtINR = (n) => `₹${n.toLocaleString('en-IN')}`
+
+// Three core value props shown at checkout.
+export const CVPS = [
+  { icon: 'shield', title: 'Price-match guarantee', desc: "Find this trip cheaper elsewhere and we'll match it." },
+  { icon: 'sparkle', title: 'Scapia promise', desc: 'Every stop vetted by a local expert — or your money back.' },
+  { icon: 'phone', title: 'On-trip assistance', desc: '24×7 support from India for anything you need on the ground.' },
+]
 
 // Asset base — respects Vite's configured base so paths work on the
 // GitHub Pages project subpath (…/itinerary-scorer-app/) and in local dev.

@@ -7,6 +7,7 @@ import Questions from './screens/Questions.jsx'
 import Planning from './screens/Planning.jsx'
 import ItineraryReady from './screens/ItineraryReady.jsx'
 import Trip from './screens/Trip.jsx'
+import Checkout from './screens/Checkout.jsx'
 
 export default function App() {
   const location = useLocation()
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/planning" element={<Planning />} />
           <Route path="/ready" element={<ItineraryReady />} />
           <Route path="/trip" element={<Trip />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </AnimatePresence>

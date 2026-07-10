@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Screen } from '../components/Chrome.jsx'
 import { Button, CategoryPill, Sheet } from '../components/ui.jsx'
@@ -38,6 +38,7 @@ const FREE_EDITS = 2
 
 export default function Trip() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const [chatOpen, setChatOpen] = useState(searchParams.get('tab') === 'chat')
   const [days, setDays] = useState(TRIP.days)
   const [updatedId, setUpdatedId] = useState(null)
@@ -76,12 +77,18 @@ export default function Trip() {
 
   return (
     <Screen>
-      {/* Compact header — title left, price + book CTA right */}
-      <div className="trip-head trip-head--bar">
-        <h1 className="t-hd-large" style={{ flex: 1, minWidth: 0 }}>{TRIP.title}</h1>
-        <div className="trip-cta">
-          <span className="pricechip">{TRIP.price}</span>
-          <Button variant="dark" size="sm">Book this trip</Button>
+      {/* Header — trip identity on top, price + book CTA in a row below */}
+      <div className="trip-head trip-head--v2">
+        <div className="trip-head__top">
+          <h1 className="t-hd-large">{TRIP.title}</h1>
+          <div className="t-p-small muted" style={{ marginTop: 2 }}>{TRIP.durationDays} days · {TRIP.dateRange}</div>
+        </div>
+        <div className="trip-head__book">
+          <div>
+            <div className="t-lb-sm muted">Total / person</div>
+            <div className="t-hd-sm">{TRIP.price}</div>
+          </div>
+          <Button variant="dark" size="md" onClick={() => navigate('/checkout')}>Proceed to book</Button>
         </div>
       </div>
 

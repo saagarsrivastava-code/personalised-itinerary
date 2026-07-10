@@ -614,6 +614,33 @@
   font: 700 13px/1 var(--font-body); color: var(--content-primary);
   background: var(--neutral-grey-400); border-radius: 10px; padding: 8px 14px;
 }
+
+/* trip header v2 — identity on top, price + CTA row below */
+.trip-head--v2 { padding: 14px 20px 14px; }
+.trip-head__book {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: 14px; padding: 12px 14px;
+  background: var(--bg-primary); border: 1px solid var(--border-opaque);
+  border-radius: var(--r-md); box-shadow: var(--shadow-card);
+}
+.trip-head__book .btn { flex-shrink: 0; }
+
+/* checkout */
+.section-label {
+  font: 700 12px/1 var(--font-body); letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--content-tertiary); margin: 22px 0 10px;
+}
+.costrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-opaque); }
+.costrow:last-child { border-bottom: none; }
+.costrow--plain { padding: 8px 0; border-bottom: none; }
+.costrow--total { padding: 12px 0 14px; margin-top: 2px; border-top: 1.5px solid var(--border-strong); border-bottom: none; }
+.cvp { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-opaque); }
+.cvp:last-child { border-bottom: none; }
+.cvp__icn {
+  flex-shrink: 0; width: 38px; height: 38px; border-radius: 11px;
+  background: var(--primary-scapia-000); color: var(--brand-primary);
+  display: flex; align-items: center; justify-content: center;
+}
 .fab {
   position: absolute; right: 20px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 25;
   width: 62px; height: 62px; border-radius: 50%;
