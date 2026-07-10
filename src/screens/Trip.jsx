@@ -97,7 +97,7 @@ export default function Trip() {
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: updatedId ? 0 : (di * 3 + si) * 0.05, duration: 0.25 }}
                 >
-                  <div className={`stop${updatedId === stop.id ? ' is-updated' : ''}`} id={`stop-${stop.id}`} style={{ marginTop: si ? 8 : 0 }}>
+                  <div className={`stop${stop.updated ? ' stop--edited' : ''}${updatedId === stop.id ? ' is-updated' : ''}`} id={`stop-${stop.id}`} style={{ marginTop: si ? 8 : 0 }}>
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.span
                         key={stop.time || '—'} className="stop__time"
@@ -137,15 +137,16 @@ export default function Trip() {
         ))}
       </div>
 
-      {/* Floating chat bubble */}
+      {/* Floating chat CTA */}
       {!chatOpen && (
         <motion.button
-          className="fab" aria-label={`Chat with ${EXPERT.name}`}
-          initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          className="fab fab--ext"
+          initial={{ scale: 0.9, opacity: 0, y: 10 }} animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 400, damping: 26, delay: 0.2 }}
           onClick={() => setChatOpen(true)}
         >
-          <Icon name="chat" size={26} />
+          <Icon name="chat" size={20} />
+          Customise your itinerary with {EXPERT.name.split(' ')[0]}
         </motion.button>
       )}
 
@@ -167,9 +168,20 @@ function ChatSheet({ open, onClose, nextChange, onApplied, suggestion, blocked, 
   const [typing, setTyping] = useState(false)
   const [paying, setPaying] = useState(false)
   const scrollRef = useRef(null)
+  const inputRef = useRef(null)
 
   const sent = msgs.filter((m) => m.from === 'me').length
   const left = Math.max(0, FREE_MESSAGES - sent)
+
+  // Auto-grow the composer so the full message stays visible. Add the border
+  // delta (offset − client) so border-box sizing doesn't clip the last line.
+  useEffect(() => {
+    const el = inputRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    const border = el.offsetHeight - el.clientHeight
+    el.style.height = `${Math.min(el.scrollHeight + border, 120)}px`
+  }, [text, open])
 
   // Pre-fill the composer with the upcoming scripted request whenever the
   // sheet opens empty — the tester just hits send (or types over it).
@@ -239,10 +251,12 @@ function ChatSheet({ open, onClose, nextChange, onApplied, suggestion, blocked, 
       ) : (
         <div className="chat-input">
           <button className="chat-mic" aria-label="Voice message"><Icon name="mic" size={19} /></button>
-          <input
+          <textarea
+            ref={inputRef}
+            rows={1}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') send() }}
+            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }}
             placeholder={left === 0 ? 'You’re out of free messages' : `Message ${EXPERT.name.split(' ')[0]}…`}
             disabled={left === 0}
           />

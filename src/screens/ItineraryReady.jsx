@@ -10,8 +10,11 @@ export default function ItineraryReady() {
 
   return (
     <Screen>
+      <div className="pad" style={{ paddingTop: 8 }}>
+        <button className="appbar__back" style={{ marginLeft: -8 }} onClick={() => navigate(-1)} aria-label="Back"><Icon name="back" /></button>
+      </div>
       {/* Itinerary runs the full page and scrolls behind the sticky sheet below. */}
-      <div className="screen-body pad" style={{ paddingTop: 24, paddingBottom: 210 }}>
+      <div className="screen-body pad" style={{ paddingTop: 8, paddingBottom: 210 }}>
         <h1 className="t-hd-large">Your itinerary is ready</h1>
         <div className="t-p-small muted" style={{ marginTop: 4 }}>{TRIP.destination} · {TRIP.durationDays} days · {TRIP.dateRange}</div>
 
@@ -33,7 +36,6 @@ export default function ItineraryReady() {
                         <div className="stop__name" style={{ fontSize: 15 }}>{stop.name}</div>
                         <div style={{ marginTop: 5 }}><CategoryPill category={stop.category} /></div>
                       </div>
-                      <span className="stop__edit"><Icon name="pencil" size={15} /></span>
                     </div>
                     {stop.transitAfter && (
                       <div className="transit">
@@ -55,7 +57,10 @@ export default function ItineraryReady() {
           className="expert-card" style={{ marginBottom: 10 }}
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.35 }}
         >
-          <img className="expert-card__av" src={EXPERT.avatar} onError={onAvatarError} alt={EXPERT.name} />
+          <span className="avwrap">
+            <img className="expert-card__av" src={EXPERT.avatar} onError={onAvatarError} alt={EXPERT.name} />
+            <span className="avwrap__flag">{EXPERT.flag}</span>
+          </span>
           <div>
             <div className="t-lb-sm muted">Vetted by</div>
             <div className="t-hd-sm">{EXPERT.name}</div>

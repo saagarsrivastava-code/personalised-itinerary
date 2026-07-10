@@ -56,7 +56,8 @@ export const ASSET_BASE = import.meta.env.BASE_URL
 // Linh's photo lives at public/linh.png; stock stand-in only if it goes missing.
 export const EXPERT = {
   name: 'Linh Fa',
-  title: 'Thai traveller with 5 YOE',
+  title: 'Thai travel expert, living in Bangkok',
+  flag: '🇹🇭',
   avatar: `${ASSET_BASE}linh.png`,
 }
 export const EXPERT_FALLBACK = IMG('1573496359142-b8d87734a5a2', 200) + '&crop=faces'
