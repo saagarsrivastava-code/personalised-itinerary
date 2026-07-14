@@ -114,10 +114,10 @@ export default function C3Discover() {
           <>
             <div className="swipe-actions">
               <button className="swipe-btn swipe-btn--nope" onClick={() => topRef.current?.fling(-1)} aria-label="Skip">
-                <Icon name="close" size={26} />
+                <Icon name="close" size={20} />
               </button>
               <button className="swipe-btn swipe-btn--like" onClick={() => topRef.current?.fling(1)} aria-label="Shortlist">
-                <Icon name="bookmark" size={24} />
+                <Icon name="bookmark" size={18} />
               </button>
             </div>
             <div className="t-lb-sm muted center" style={{ marginTop: 10 }}>{index + 1} of {deck.length}</div>

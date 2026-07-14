@@ -709,7 +709,7 @@
 
 .swipe-actions { display: flex; justify-content: center; gap: 26px; margin-top: 18px; }
 .swipe-btn {
-  width: 58px; height: 58px; border-radius: 50%;
+  width: 46px; height: 46px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   background: var(--bg-primary); box-shadow: var(--shadow-card);
   border: 1.5px solid var(--border-opaque);
