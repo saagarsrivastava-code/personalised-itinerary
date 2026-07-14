@@ -1,43 +1,39 @@
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
-import { VIBES_MAX } from '../data/c3.js'
+import { FLEXIBLE_MONTH } from '../data/c3.js'
 
 const C3Context = createContext(null)
 
 export function C3Provider({ children }) {
-  // Basics — months, pax, total trip budget range (₹, per person)
-  const [basics, setBasics] = useState({
-    months: ['Apr'],
-    party: 'Partner',
+  // Phase 1 — qualitative (drives country recommendations)
+  const [qual, setQual] = useState({
+    who: 'Couple',
+    vibe: 'relax',
+    reason: 'Vacation',
     budget: [50000, 150000],
+    duration: 'Short (4–6 days)',
+    months: ['Apr'],
+    weather: 'beach',
   })
-  const setBasic = useCallback((key, value) => setBasics((b) => ({ ...b, [key]: value })), [])
+  const setQ = useCallback((key, value) => setQual((q) => ({ ...q, [key]: value })), [])
 
   const toggleMonth = useCallback((m) => {
-    setBasics((b) => ({
-      ...b,
-      months: b.months.includes(m) ? b.months.filter((x) => x !== m) : [...b.months, m],
-    }))
-  }, [])
-
-  // Preferences — collected via pill questions (no swipe)
-  const [prefs, setPrefs] = useState({
-    pace: 50,                       // 0 = more free time … 100 = more activities
-    vibes: ['food', 'hidden'],      // up to VIBES_MAX trait keys
-    food: 'All cuisines',
-    stays: ['4✭ Hotels'],           // multi-select
-    offbeat: 'Mix of both',
-    transport: 'Private transfer',
-  })
-  const setPref = useCallback((key, value) => setPrefs((p) => ({ ...p, [key]: value })), [])
-
-  const toggleVibe = useCallback((key) => {
-    setPrefs((p) => {
-      if (p.vibes.includes(key)) return { ...p, vibes: p.vibes.filter((v) => v !== key) }
-      if (p.vibes.length >= VIBES_MAX) return p
-      return { ...p, vibes: [...p.vibes, key] }
+    setQual((q) => {
+      if (m === FLEXIBLE_MONTH) {
+        return { ...q, months: q.months.includes(FLEXIBLE_MONTH) ? [] : [FLEXIBLE_MONTH] }
+      }
+      const base = q.months.filter((x) => x !== FLEXIBLE_MONTH)
+      return { ...q, months: base.includes(m) ? base.filter((x) => x !== m) : [...base, m] }
     })
   }, [])
 
+  // Phase 2 — quantitative (refines itineraries within a country)
+  const [prefs, setPrefs] = useState({
+    pace: 50,
+    food: 'All cuisines',
+    stays: ['4✭ Hotels'],
+    transport: 'Private transfer',
+  })
+  const setPref = useCallback((key, value) => setPrefs((p) => ({ ...p, [key]: value })), [])
   const toggleStay = useCallback((key) => {
     setPrefs((p) => ({
       ...p,
@@ -45,29 +41,16 @@ export function C3Provider({ children }) {
     }))
   }, [])
 
-  // Shortlisted itineraries — array of { dest, id }, newest last.
-  const [shortlist, setShortlist] = useState([])
-
-  const isShortlisted = useCallback(
-    (dest, id) => shortlist.some((s) => s.dest === dest && s.id === id),
-    [shortlist],
-  )
-
-  const addShortlist = useCallback((dest, id) => {
-    setShortlist((prev) => (prev.some((s) => s.dest === dest && s.id === id) ? prev : [...prev, { dest, id }]))
-  }, [])
-
-  const removeShortlist = useCallback((dest, id) => {
-    setShortlist((prev) => prev.filter((s) => !(s.dest === dest && s.id === id)))
-  }, [])
+  // Which country the user drilled into
+  const [countryKey, setCountryKey] = useState(null)
 
   const value = useMemo(
     () => ({
-      basics, setBasic, toggleMonth,
-      prefs, setPref, toggleVibe, toggleStay,
-      shortlist, isShortlisted, addShortlist, removeShortlist,
+      qual, setQ, toggleMonth,
+      prefs, setPref, toggleStay,
+      countryKey, setCountryKey,
     }),
-    [basics, setBasic, toggleMonth, prefs, setPref, toggleVibe, toggleStay, shortlist, isShortlisted, addShortlist, removeShortlist],
+    [qual, setQ, toggleMonth, prefs, setPref, toggleStay, countryKey],
   )
 
   return <C3Context.Provider value={value}>{children}</C3Context.Provider>

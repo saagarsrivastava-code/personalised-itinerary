@@ -860,6 +860,94 @@
 }
 .trust-strip svg { color: var(--brand-primary); flex-shrink: 0; }
 
+/* ============================================================
+   Two-phase flow (v4): countries grid, match detail, itineraries, AI chat
+   ============================================================ */
+
+/* landing — fanned country photos */
+.fan__photo {
+  position: absolute; left: 50%; top: 0; margin-left: -78px;
+  width: 156px; height: 186px; border-radius: 20px; overflow: hidden;
+  border: 3px solid #fff; box-shadow: var(--shadow-float);
+  display: flex; align-items: flex-end;
+}
+.fan__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fan__label {
+  position: relative; z-index: 1; margin: 12px; color: #fff;
+  font: 700 16px/1 var(--font-body); text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+/* countries grid */
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ccard {
+  border-radius: var(--r-lg); overflow: hidden; background: var(--bg-primary);
+  box-shadow: var(--shadow-card); border: 1px solid var(--border-opaque);
+  display: flex; flex-direction: column; text-align: left; transition: transform 0.12s ease;
+}
+.ccard:active { transform: scale(0.98); }
+.ccard__photo { position: relative; height: 150px; background: var(--brand-dark); }
+.ccard__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ccard__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,18,35,0.6), transparent 55%); }
+.ccard__name { position: absolute; left: 12px; bottom: 10px; z-index: 1; color: #fff; font: 700 19px/1 var(--font-body); text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
+.ccard__best {
+  position: absolute; top: 10px; left: 10px; z-index: 1;
+  font: 700 10px/1 var(--font-body); color: #fff; background: var(--brand-primary);
+  border-radius: var(--r-pill); padding: 5px 9px; box-shadow: var(--shadow-cta);
+}
+.ccard__body { display: flex; align-items: center; gap: 8px; padding: 11px 12px; }
+.ccard__reason { flex: 1; font: 500 12.5px/1.3 var(--font-body); color: var(--content-secondary); }
+.ccard__go { flex-shrink: 0; color: var(--brand-primary); display: flex; }
+
+/* country detail — match reasons */
+.matchrow {
+  display: flex; align-items: center; gap: 10px; padding: 9px 0;
+  font: 500 15px/1.35 var(--font-body); color: var(--content-primary);
+}
+.matchrow + .matchrow { border-top: 1px solid var(--border-opaque); }
+.matchrow__tick {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  background: var(--success-green-000); color: var(--success-green-500);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* itineraries list */
+.itin-list-card {
+  display: block; width: 100%; text-align: left; overflow: hidden;
+  border-radius: var(--r-lg); background: var(--bg-primary);
+  box-shadow: var(--shadow-card); border: 1px solid var(--border-opaque);
+  margin-top: 14px; transition: transform 0.12s ease;
+}
+.itin-list-card:active { transform: scale(0.99); }
+.itin-list-card__photo { position: relative; height: 168px; background: var(--brand-dark); }
+.itin-list-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.itin-list-card__tags { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; flex-wrap: wrap; gap: 7px; }
+.itin-list-card__best {
+  position: absolute; bottom: 12px; left: 12px;
+  font: 700 10px/1 var(--font-body); color: #fff; background: var(--brand-primary);
+  border-radius: var(--r-pill); padding: 5px 9px; box-shadow: var(--shadow-cta);
+}
+.itin-list-card__body { padding: 13px 14px 15px; }
+.itin-list-card__price { font: 700 16px/1 var(--font-body); color: var(--content-primary); margin-top: 3px; }
+.itin-list-card__price span { font-weight: 400; font-size: 12px; color: var(--content-secondary); }
+.itin-list-card__go {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: var(--bg-secondary); color: var(--brand-primary);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* AI chat FAB + chat header */
+.fab--ai {
+  width: auto; height: 52px; border-radius: var(--r-pill); padding: 0 20px 0 16px; gap: 8px;
+  font: 700 15px/1 var(--font-body);
+}
+.fab__label { font: 700 15px/1 var(--font-body); }
+.chat-head__ai, .chat-msg-ai {
+  border-radius: 50%; background: var(--primary-scapia-000); color: var(--brand-primary);
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.chat-head__ai { width: 44px; height: 44px; }
+.chat-msg-ai { width: 26px; height: 26px; }
+
 /* helpers */
 .stack-12 > * + * { margin-top: 12px; }
 .stack-8 > * + * { margin-top: 8px; }

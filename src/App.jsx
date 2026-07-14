@@ -8,12 +8,13 @@ import ItineraryReady from './screens/ItineraryReady.jsx'
 import Trip from './screens/Trip.jsx'
 
 import C3Landing from './screens/c3/C3Landing.jsx'
-import C3Basics from './screens/c3/C3Basics.jsx'
-import C3Vibe from './screens/c3/C3Vibe.jsx'
-import C3Prefs from './screens/c3/C3Prefs.jsx'
+import C3Qual1 from './screens/c3/C3Qual1.jsx'
+import C3Qual2 from './screens/c3/C3Qual2.jsx'
 import C3Building from './screens/c3/C3Building.jsx'
-import C3Discover from './screens/c3/C3Discover.jsx'
-import C3Shortlist from './screens/c3/C3Shortlist.jsx'
+import C3Countries from './screens/c3/C3Countries.jsx'
+import C3Country from './screens/c3/C3Country.jsx'
+import C3Refine from './screens/c3/C3Refine.jsx'
+import C3Itineraries from './screens/c3/C3Itineraries.jsx'
 import C3Trip from './screens/c3/C3Trip.jsx'
 
 export default function App() {
@@ -22,20 +23,20 @@ export default function App() {
   return (
     <div className="app">
       {/* No AnimatePresence: each Screen plays its own enter animation on
-          mount, and keying Routes by path remounts cleanly on every nav. This
-          sidesteps AnimatePresence wedging on the drag-heavy swipe decks, which
-          left screens stuck mid-exit (black screen after the cards). */}
+          mount, and keying by path remounts cleanly on every nav. */}
       <div className="screen-stack" key={location.pathname}>
         <Routes location={location}>
-          {/* Destination Matchmaker is the default experience */}
+          {/* Destination Matchmaker — two-phase flow */}
           <Route path="/" element={<C3Landing />} />
           <Route path="/c3" element={<C3Landing />} />
-          <Route path="/c3/basics" element={<C3Basics />} />
-          <Route path="/c3/vibes" element={<C3Vibe />} />
-          <Route path="/c3/prefs" element={<C3Prefs />} />
-          <Route path="/c3/building" element={<C3Building />} />
-          <Route path="/c3/discover" element={<C3Discover />} />
-          <Route path="/c3/shortlist" element={<C3Shortlist />} />
+          <Route path="/c3/q/1" element={<C3Qual1 />} />
+          <Route path="/c3/q/2" element={<C3Qual2 />} />
+          <Route path="/c3/finding" element={<C3Building mode="countries" />} />
+          <Route path="/c3/countries" element={<C3Countries />} />
+          <Route path="/c3/country/:key" element={<C3Country />} />
+          <Route path="/c3/refine" element={<C3Refine />} />
+          <Route path="/c3/building" element={<C3Building mode="itineraries" />} />
+          <Route path="/c3/itineraries/:key" element={<C3Itineraries />} />
           <Route path="/c3/trip/:dest/:id" element={<C3Trip />} />
 
           {/* Earlier expert-planned concept, kept for reference */}

@@ -3,13 +3,13 @@ import { motion } from 'framer-motion'
 import { Screen } from '../../components/Chrome.jsx'
 import { Button } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
-import { SWIPE_CARDS } from '../../data/c3.js'
+import { COUNTRIES } from '../../data/c3.js'
 
-// Small fanned deck teasing the swipe interaction ahead.
+// Fanned country photos teasing the recommendations ahead.
 const FAN = [
-  { card: SWIPE_CARDS[3], rot: -9, x: -58, delay: 0.15 },
-  { card: SWIPE_CARDS[0], rot: 7, x: 58, delay: 0.25 },
-  { card: SWIPE_CARDS[2], rot: -1, x: 0, delay: 0.35 },
+  { c: COUNTRIES[0], rot: -9, x: -62, delay: 0.15 },
+  { c: COUNTRIES[4], rot: 8, x: 62, delay: 0.25 },
+  { c: COUNTRIES[1], rot: -1, x: 0, delay: 0.35 },
 ]
 
 export default function C3Landing() {
@@ -39,31 +39,31 @@ export default function C3Landing() {
             className="t-p-med muted"
             style={{ marginTop: 12, maxWidth: 300, marginLeft: 'auto', marginRight: 'auto' }}
           >
-            Answer a few quick questions — we'll turn them into final plans you can book.
+            Tell us your vibe — we'll match you to the right country, then build a plan you can book.
           </motion.p>
         </motion.div>
 
         <div className="spacer" style={{ minHeight: 16 }} />
 
-        {/* fanned swipe-card teaser */}
+        {/* fanned country teaser */}
         <div className="fan">
-          {FAN.map(({ card, rot, x, delay }) => (
+          {FAN.map(({ c, rot, x, delay }) => (
             <motion.div
-              key={card.key}
-              className="fan__card"
-              style={{ background: card.bg, color: card.tint }}
+              key={c.key}
+              className="fan__photo"
+              style={{ background: c.grad }}
               initial={{ opacity: 0, y: 26, rotate: 0, x: 0 }}
               animate={{ opacity: 1, y: 0, rotate: rot, x }}
               transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Icon name={card.icon} size={30} stroke={1.6} />
-              <span>{card.title}</span>
+              <img src={c.hero} alt="" draggable="false" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+              <span className="fan__label">{c.name}</span>
             </motion.div>
           ))}
         </div>
 
         <div style={{ height: 28 }} />
-        <Button full onClick={() => navigate('/c3/basics')}>Find my trip</Button>
+        <Button full onClick={() => navigate('/c3/q/1')}>Find my destination</Button>
       </div>
     </Screen>
   )
