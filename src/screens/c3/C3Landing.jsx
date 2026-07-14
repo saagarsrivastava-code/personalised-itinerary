@@ -64,9 +64,6 @@ export default function C3Landing() {
 
         <div style={{ height: 28 }} />
         <Button full onClick={() => navigate('/c3/basics')}>Find my trip</Button>
-        <div className="t-lb-sm muted center" style={{ marginTop: 10 }}>
-          Takes under a minute · No sign-up needed
-        </div>
       </div>
     </Screen>
   )
