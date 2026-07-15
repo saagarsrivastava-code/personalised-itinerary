@@ -54,6 +54,8 @@ export default function C3Trip() {
   const [editStop, setEditStop] = useState(null) // { di, si }
   const [editName, setEditName] = useState('')
   const [updatedId, setUpdatedId] = useState(null)
+  const [scrolled, setScrolled] = useState(false)
+  const scrollRef = useRef(null)
 
   if (!country || !itinerary) return <Navigate to="/c3/countries" replace />
 
@@ -87,14 +89,19 @@ export default function C3Trip() {
 
   return (
     <Screen>
-      <div className="screen-body" style={{ paddingBottom: 96 }}>
+      {/* Sticky header — overlays the hero, gains a blurred bg on scroll */}
+      <div className={`detail-topbar${scrolled ? ' is-scrolled' : ''}`}>
+        <button className="detail-topbar__back" onClick={() => navigate(`/c3/itineraries/${dest}`)} aria-label="Back"><Icon name="back" size={22} /></button>
+        <div className="detail-topbar__title">{itinerary.title}</div>
+        <button className="detail-topbar__book" onClick={() => setBookOpen(true)}>
+          <Icon name="wallet" size={15} /> Book · {inr(itinerary.price)}
+        </button>
+      </div>
+
+      <div className="screen-body" ref={scrollRef} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 24)} style={{ paddingBottom: 96 }}>
         <div className="detail-hero detail-hero--tall" style={{ background: itinerary.grad }}>
           <img className="detail-hero__img" src={itinerary.photo} alt="" draggable="false" onError={(e) => { e.currentTarget.style.display = 'none' }} />
           <div className="detail-hero__scrim" />
-          <button className="detail-hero__back" onClick={() => navigate(`/c3/itineraries/${dest}`)} aria-label="Back"><Icon name="back" size={22} /></button>
-          <button className="detail-hero__book" onClick={() => setBookOpen(true)}>
-            <Icon name="wallet" size={15} /> Book · {inr(itinerary.price)}
-          </button>
           <div className="detail-hero__tags">
             {traitPills(itinerary).map((t, i) => <span key={i} className="itin-tag">{t}</span>)}
           </div>

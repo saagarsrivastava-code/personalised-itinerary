@@ -796,14 +796,44 @@
 }
 .detail-hero__save.is-on { background: var(--brand-primary); color: #fff; }
 .detail-hero__save:active { transform: scale(0.92); }
-.detail-hero__book {
-  position: absolute; top: 14px; right: 14px; z-index: 2;
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--brand-primary); color: #fff;
-  border-radius: var(--r-pill); padding: 10px 16px;
-  font: 700 14px/1 var(--font-body); box-shadow: var(--shadow-cta);
+/* sticky header over the itinerary hero */
+.detail-topbar {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+  background: transparent; border-bottom: 1px solid transparent;
+  transition: background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
 }
-.detail-hero__book:active { transform: scale(0.96); }
+.detail-topbar.is-scrolled {
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-bottom-color: var(--border-opaque);
+}
+.detail-topbar__back {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.92); color: var(--content-primary);
+  box-shadow: 0 2px 8px rgba(3, 18, 35, 0.2);
+  transition: background 0.25s, box-shadow 0.25s;
+}
+.detail-topbar.is-scrolled .detail-topbar__back { background: transparent; box-shadow: none; }
+.detail-topbar__back:active { transform: scale(0.92); }
+.detail-topbar__title {
+  flex: 1; min-width: 0; text-align: center;
+  font: 700 15px/1.2 var(--font-body); color: var(--content-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  opacity: 0; transform: translateY(2px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.detail-topbar.is-scrolled .detail-topbar__title { opacity: 1; transform: none; }
+.detail-topbar__book {
+  flex-shrink: 0; margin-left: auto;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--brand-dark); color: #fff;
+  border-radius: var(--r-pill); padding: 10px 16px;
+  font: 700 14px/1 var(--font-body);
+  box-shadow: 0 6px 18px rgba(3, 18, 35, 0.32);
+}
+.detail-topbar__book:active { transform: scale(0.96); }
 .detail-hero__tags { position: absolute; top: 62px; left: 16px; right: 16px; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; }
 .detail-hero__cap { position: absolute; left: 20px; right: 20px; bottom: 20px; z-index: 2; color: #fff; }
 .detail-hero__title { font: 700 27px/1.12 var(--font-body); letter-spacing: -0.01em; margin-top: 4px; }
