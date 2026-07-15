@@ -1025,6 +1025,26 @@
   background: var(--bg-tertiary); border-radius: var(--r-pill); padding: 4px 8px;
 }
 
+/* ── Sorting loader (qualitative → countries) ──────────────────── */
+.sort-pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 340px; }
+.sort-pill {
+  font: 600 12px/1 var(--font-body); color: var(--content-primary);
+  background: var(--bg-secondary); border: 1px solid var(--border-opaque);
+  border-radius: var(--r-pill); padding: 8px 12px;
+}
+.sort-stage { position: relative; width: 196px; height: 258px; }
+.sort-card {
+  position: absolute; inset: 0; border-radius: 20px; overflow: hidden;
+  background: var(--brand-dark); box-shadow: 0 12px 30px rgba(3, 18, 35, 0.3);
+}
+.sort-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16); pointer-events: none;
+}
+.sort-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sort-card__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,18,35,0.6), transparent 55%); }
+.sort-card__name { position: absolute; left: 14px; bottom: 12px; z-index: 1; color: #fff; font: 700 18px/1 var(--font-body); text-shadow: 0 1px 6px rgba(0,0,0,0.4); }
+
 /* ── Countries card deck ───────────────────────────────────────── */
 .viewtoggle {
   display: inline-flex; align-items: center; gap: 5px;
