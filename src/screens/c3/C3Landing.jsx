@@ -30,16 +30,16 @@ export default function C3Landing() {
         >
           <motion.h1
             variants={{ hide: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-            style={{ font: '700 29px/1.28 var(--font-body)', letterSpacing: '-0.01em' }}
+            style={{ font: '700 30px/1.28 var(--font-body)', letterSpacing: '-0.01em' }}
           >
-            Want to go for a trip<br />but stuck on <span style={{ color: 'var(--brand-primary)' }}>where?</span>
+            Not sure <span style={{ color: 'var(--brand-primary)' }}>where to go?</span>
           </motion.h1>
           <motion.p
             variants={{ hide: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
             className="t-p-med muted"
             style={{ marginTop: 12, maxWidth: 300, marginLeft: 'auto', marginRight: 'auto' }}
           >
-            Answer a few quick questions — we'll turn them into final plans you can book.
+            Answer a few quick questions and find a destination you'll love.
           </motion.p>
         </motion.div>
 
@@ -62,8 +62,11 @@ export default function C3Landing() {
           ))}
         </div>
 
-        <div style={{ height: 28 }} />
-        <Button full onClick={() => navigate('/c3/q/1')}>Find my trip</Button>
+        <div className="t-lb-sm muted center" style={{ marginTop: 16 }}>
+          Matched to your vibe — with the reasons why.
+        </div>
+        <div style={{ height: 16 }} />
+        <Button full onClick={() => navigate('/c3/q/1')}>Find my destination</Button>
       </div>
     </Screen>
   )
