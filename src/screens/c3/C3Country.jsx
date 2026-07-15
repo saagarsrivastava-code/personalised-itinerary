@@ -68,13 +68,6 @@ export default function C3Country() {
               </div>
               <div className="detailrow__right"><span className="detailrow__value">{monthsText}</span></div>
             </div>
-            <div className="detailrow" style={{ borderTop: '1px solid var(--border-opaque)' }}>
-              <div className="detailrow__left">
-                <span className="detailrow__icn"><Icon name="list" size={16} /></span>
-                <span className="detailrow__label">Itineraries ready</span>
-              </div>
-              <div className="detailrow__right"><span className="detailrow__value">{country.itineraries.length} plans</span></div>
-            </div>
           </div>
 
         </div>
