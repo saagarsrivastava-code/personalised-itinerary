@@ -402,6 +402,47 @@ export function rankItineraries(country, qual, prefs) {
   return [...country.itineraries].sort((a, b) => score(b) - score(a))
 }
 
+// ── Activities (visual, image-based selection step) ────────────
+export const ACTIVITIES = [
+  { key: 'beach',     label: 'Beaches & islands',    img: PHOTO('1518548419970-58e3b4079ab2'), vibes: ['relax', 'nature'] },
+  { key: 'trek',      label: 'Treks & viewpoints',   img: PHOTO('1470240731273-7821a6eeb6bd'), vibes: ['adventure', 'nature'] },
+  { key: 'food',      label: 'Food trails',          img: PHOTO('1504674900247-0877df9cc836'), vibes: ['food'] },
+  { key: 'culture',   label: 'Temples & heritage',   img: PHOTO('1528127269322-539801943592'), vibes: ['culture'] },
+  { key: 'water',     label: 'Snorkel & dive',       img: PHOTO('1573843981267-be1999ff37cd'), vibes: ['nature', 'adventure'] },
+  { key: 'spa',       label: 'Spa & wellness',       img: PHOTO('1604999565976-8913ad2ddb7c'), vibes: ['wellness', 'relax'] },
+  { key: 'wildlife',  label: 'Wildlife & safari',    img: PHOTO('1516426122078-c23e76319801'), vibes: ['nature'] },
+  { key: 'scenic',    label: 'Scenic & photo spots', img: PHOTO('1573790387438-4da905039392'), vibes: ['nature', 'relax'] },
+  { key: 'market',    label: 'Markets & shopping',   img: PHOTO('1567337710282-00832b415979'), vibes: ['food', 'culture'] },
+  { key: 'nightlife', label: 'Nightlife & bars',     img: PHOTO('1552465011-b4e21bf6e79a'),    vibes: ['food'] },
+]
+
+// Activities relevant to a country, user's vibes surfaced first.
+export function activitiesFor(country, qual) {
+  const uv = qual?.vibes || []
+  const relevant = ACTIVITIES.filter((a) => a.vibes.some((v) => country.vibes.includes(v)))
+  const pick = relevant.length >= 4 ? relevant : ACTIVITIES
+  return [...pick].sort((a, b) => (b.vibes.some((v) => uv.includes(v)) ? 1 : 0) - (a.vibes.some((v) => uv.includes(v)) ? 1 : 0))
+}
+
+// Comparison matrix: does each country tick the boxes the user selected?
+export function compareMatrix(qual, ranked) {
+  const rows = []
+  ;(qual.vibes || []).forEach((v) => rows.push({ label: `${VIBE_EMOJI[v]} ${VIBE_SHORT[v]}`, test: (c) => c.vibes.includes(v) }))
+  if (qual.months && !qual.months.includes(FLEXIBLE_MONTH) && qual.months.length) {
+    rows.push({ label: `📅 ${qual.months.slice(0, 2).join(', ')}`, test: (c) => c.bestMonths.some((m) => qual.months.includes(m)) })
+  }
+  rows.push({ label: '💰 In budget', test: (c) => budgetBandOf(qual.budget || [50000, 150000]) === c.budgetBand })
+  if (qual.who) rows.push({ label: `👥 ${qual.who}`, test: (c) => c.goodFor?.includes(qual.who) })
+  return {
+    criteria: rows.map((r) => r.label),
+    cols: ranked.map(({ country }) => ({
+      key: country.key, name: country.name, hero: country.hero, grad: country.grad,
+      cells: rows.map((r) => r.test(country)),
+      score: rows.filter((r) => r.test(country)).length,
+    })),
+  }
+}
+
 // ── Cost breakdown + stay tier (shown on itinerary cards & detail) ──
 export function stayLabel(it) {
   if (it.stay) return it.stay

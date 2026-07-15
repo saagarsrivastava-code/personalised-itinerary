@@ -37,12 +37,19 @@ export function C3Provider({ children }) {
     food: 'All cuisines',
     stays: ['4✭ Hotels'],
     transport: 'Private transfer',
+    activities: [],
   })
   const setPref = useCallback((key, value) => setPrefs((p) => ({ ...p, [key]: value })), [])
   const toggleStay = useCallback((key) => {
     setPrefs((p) => ({
       ...p,
       stays: p.stays.includes(key) ? p.stays.filter((s) => s !== key) : [...p.stays, key],
+    }))
+  }, [])
+  const toggleActivity = useCallback((key) => {
+    setPrefs((p) => ({
+      ...p,
+      activities: p.activities.includes(key) ? p.activities.filter((a) => a !== key) : [...p.activities, key],
     }))
   }, [])
 
@@ -52,10 +59,10 @@ export function C3Provider({ children }) {
   const value = useMemo(
     () => ({
       qual, setQ, toggleMonth, toggleVibe,
-      prefs, setPref, toggleStay,
+      prefs, setPref, toggleStay, toggleActivity,
       countryKey, setCountryKey,
     }),
-    [qual, setQ, toggleMonth, toggleVibe, prefs, setPref, toggleStay, countryKey],
+    [qual, setQ, toggleMonth, toggleVibe, prefs, setPref, toggleStay, toggleActivity, countryKey],
   )
 
   return <C3Context.Provider value={value}>{children}</C3Context.Provider>

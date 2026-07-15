@@ -69,8 +69,8 @@ export default function C3Refine() {
       </div>
 
       <Footer>
-        <Button full variant="dark" disabled={!ready} onClick={() => navigate('/c3/building')}>
-          Show my itineraries
+        <Button full variant="dark" disabled={!ready} onClick={() => navigate('/c3/activities')}>
+          Next — pick activities
         </Button>
       </Footer>
     </Screen>
