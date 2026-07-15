@@ -24,7 +24,7 @@ export default function C3Countries() {
     <Screen>
       <AppBar
         title="Where you should go"
-        subtitle={view === 'cards' ? 'Swipe through your matches' : 'How each stacks up to your picks'}
+        subtitle={view === 'cards' ? undefined : 'How each stacks up to your picks'}
         onBack={() => navigate('/c3/q/2')}
         right={
           <button className="viewtoggle" onClick={() => setView((v) => (v === 'cards' ? 'compare' : 'cards'))}>
