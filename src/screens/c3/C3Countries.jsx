@@ -47,8 +47,8 @@ export default function C3Countries() {
                     <Icon name="arrowRight" size={14} style={{ color: 'var(--content-tertiary)' }} />
                   </div>
                   <div className="ccard__tags">
-                    {tags.slice(0, 4).map((t, ti) => (
-                      <span key={t} className={`ccard__tag${ti === 0 ? ' ccard__tag--key' : ''}`}>{t}</span>
+                    {tags.slice(0, 4).map((t) => (
+                      <span key={t} className="ccard__tag">{t}</span>
                     ))}
                   </div>
                 </div>
