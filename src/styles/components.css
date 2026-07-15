@@ -1021,8 +1021,8 @@
 .chat-suggests .chip { flex-shrink: 0; white-space: nowrap; }
 
 .q-optional {
-  font: 500 11px/1 var(--font-body); color: var(--content-tertiary);
-  background: var(--bg-secondary); border-radius: var(--r-pill); padding: 4px 8px;
+  font: 600 11px/1 var(--font-body); color: var(--neutral-grey-700);
+  background: var(--bg-tertiary); border-radius: var(--r-pill); padding: 4px 8px;
 }
 
 /* ── Countries card deck ───────────────────────────────────────── */

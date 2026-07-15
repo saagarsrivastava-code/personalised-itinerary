@@ -31,6 +31,7 @@ export default function C3Qual1() {
 
           <div style={{ marginTop: 28 }}>
             <h2 className="q-title q-title--sm">What's the vibe you're after?</h2>
+            <div className="t-p-small muted" style={{ marginTop: 3 }}>You can select multiple</div>
             <div className="chips" style={{ marginTop: 12 }}>
               {QUAL_VIBES.map((v) => (
                 <Pill key={v.key} on={qual.vibes.includes(v.key)} onClick={() => toggleVibe(v.key)}>{v.label}</Pill>

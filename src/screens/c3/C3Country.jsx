@@ -4,7 +4,7 @@ import { Screen } from '../../components/Chrome.jsx'
 import { Button } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
-import { getCountry, matchCountry, monthsLabel, weatherInsight } from '../../data/c3.js'
+import { getCountry, matchCountry, weatherInsight } from '../../data/c3.js'
 
 export default function C3Country() {
   const navigate = useNavigate()
@@ -77,9 +77,6 @@ export default function C3Country() {
             </div>
           </div>
 
-          <div className="t-lb-sm muted" style={{ marginTop: 14 }}>
-            Your travel window: {monthsLabel(qual.months)}
-          </div>
         </div>
       </div>
 
