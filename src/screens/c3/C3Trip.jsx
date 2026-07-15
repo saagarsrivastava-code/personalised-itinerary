@@ -289,17 +289,18 @@ function ChatSheet({ open, onClose, country, onApply }) {
         )}
       </div>
 
-      {msgs.length <= 1 && (
-        <div className="chips" style={{ padding: '4px 2px 10px' }}>
-          {AI_ACTIONS.map((a) => (
-            <button key={a.prompt} className="chip" onClick={() => send(a.prompt, a)}>{a.prompt}</button>
-          ))}
+      <div className="chat-foot">
+        {msgs.length <= 1 && (
+          <div className="chat-suggests">
+            {AI_ACTIONS.map((a) => (
+              <button key={a.prompt} className="chip" onClick={() => send(a.prompt, a)}>{a.prompt}</button>
+            ))}
+          </div>
+        )}
+        <div className="chat-input">
+          <input value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') send() }} placeholder="Ask for a change…" />
+          <button className="chat-send" onClick={() => send()} aria-label="Send"><Icon name="send" size={20} /></button>
         </div>
-      )}
-
-      <div className="chat-input">
-        <input value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') send() }} placeholder="Ask for a change…" />
-        <button className="chat-send" onClick={() => send()} aria-label="Send"><Icon name="send" size={20} /></button>
       </div>
     </Sheet>
   )
