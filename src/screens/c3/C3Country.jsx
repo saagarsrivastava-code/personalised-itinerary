@@ -74,7 +74,7 @@ export default function C3Country() {
       </div>
 
       <div className="footer">
-        <Button full onClick={viewItineraries}>View itineraries for {country.name}</Button>
+        <Button full onClick={viewItineraries}>Let's plan your trip</Button>
       </div>
     </Screen>
   )
