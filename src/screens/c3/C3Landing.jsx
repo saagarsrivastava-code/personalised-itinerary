@@ -3,12 +3,13 @@ import { motion } from 'framer-motion'
 import { Screen } from '../../components/Chrome.jsx'
 import { Button } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
+import { COUNTRIES } from '../../data/c3.js'
 
-// Fanned vibe cards teasing the questions ahead.
+// Fanned destination photos teasing the recommendations ahead.
 const FAN = [
-  { icon: 'leaf', title: 'Nature',        bg: 'linear-gradient(150deg, #EAF7E6, #C9EBBE)', tint: '#38801F', rot: -9, x: -58, delay: 0.15 },
-  { icon: 'food', title: 'Food & dining', bg: 'linear-gradient(150deg, #FFEAE0, #FECBB3)', tint: '#C63800', rot: 7,  x: 58,  delay: 0.25 },
-  { icon: 'gem',  title: 'Hidden gems',   bg: 'linear-gradient(150deg, #E0EFFF, #B5D5FA)', tint: '#135EB4', rot: -1, x: 0,   delay: 0.35 },
+  { c: COUNTRIES[1], rot: -9, x: -62, delay: 0.15 }, // Thailand (left)
+  { c: COUNTRIES[5], rot: 8, x: 62, delay: 0.25 },   // Maldives (right)
+  { c: COUNTRIES[0], rot: -1, x: 0, delay: 0.35 },   // Bali (front)
 ]
 
 export default function C3Landing() {
@@ -44,19 +45,19 @@ export default function C3Landing() {
 
         <div className="spacer" style={{ minHeight: 16 }} />
 
-        {/* fanned vibe-card teaser */}
+        {/* fanned destination-photo teaser */}
         <div className="fan">
-          {FAN.map(({ icon, title, bg, tint, rot, x, delay }) => (
+          {FAN.map(({ c, rot, x, delay }) => (
             <motion.div
-              key={title}
-              className="fan__card"
-              style={{ background: bg, color: tint }}
+              key={c.key}
+              className="fan__photo"
+              style={{ background: c.grad }}
               initial={{ opacity: 0, y: 26, rotate: 0, x: 0 }}
               animate={{ opacity: 1, y: 0, rotate: rot, x }}
               transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Icon name={icon} size={30} stroke={1.6} />
-              <span>{title}</span>
+              <img src={c.hero} alt="" draggable="false" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+              <span className="fan__label">{c.name}</span>
             </motion.div>
           ))}
         </div>
