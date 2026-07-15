@@ -94,7 +94,7 @@ export default function C3Trip() {
         <button className="detail-topbar__back" onClick={() => navigate(`/c3/itineraries/${dest}`)} aria-label="Back"><Icon name="back" size={22} /></button>
         <div className="detail-topbar__title">{itinerary.title}</div>
         <button className="detail-topbar__book" onClick={() => setBookOpen(true)}>
-          <Icon name="wallet" size={15} /> Book · {inr(itinerary.price)}
+          <Icon name="wallet" size={15} /> Book · {inr(total)}
         </button>
       </div>
 
@@ -203,8 +203,8 @@ export default function C3Trip() {
             <div className="t-hd-med" style={{ paddingTop: 6 }}>Book this trip</div>
             <p className="t-p-small muted" style={{ marginTop: 3 }}>{itinerary.tag} · {itinerary.nights} · {qual.who}</p>
             <div className="card" style={{ marginTop: 16 }}>
-              <div className="bookrow"><span>Package ({qual.who.toLowerCase()})</span><b>{inr(itinerary.price)} /pax</b></div>
-              <div className="bookrow"><span>Scapia coins on booking</span><b style={{ color: 'var(--success-green-500)' }}>+{Math.round(itinerary.price / 20).toLocaleString('en-IN')}</b></div>
+              <div className="bookrow"><span>Estimated total ({qual.who.toLowerCase()})</span><b>{inr(total)} /pax</b></div>
+              <div className="bookrow"><span>Scapia coins on booking</span><b style={{ color: 'var(--success-green-500)' }}>+{Math.round(total / 20).toLocaleString('en-IN')}</b></div>
               <div className="bookrow"><span>Pay today to hold</span><b>{inr(999)}</b></div>
             </div>
             <p className="t-lb-sm muted" style={{ marginTop: 12 }}>Free cancellation for 48 hours. Zero forex markup with your scapia card.</p>
