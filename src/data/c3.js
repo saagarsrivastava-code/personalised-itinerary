@@ -402,6 +402,25 @@ export function rankItineraries(country, qual, prefs) {
   return [...country.itineraries].sort((a, b) => score(b) - score(a))
 }
 
+// Weather insight — why the picked month is (or isn't) a good time to go.
+const CLIMATE = {
+  bali:     { peak: 'dry, sunny beach days with calm seas', shoulder: 'lush green season with short showers — fewer crowds and better prices' },
+  thailand: { peak: 'cool, dry weather — the best beach season of the year', shoulder: 'warm with the odd shower — quieter beaches and better deals' },
+  vietnam:  { peak: 'mild and dry — comfortable for cities and coast alike', shoulder: 'warm with some rain — greener scenery and fewer tourists' },
+  africa:   { peak: 'dry season — wildlife gathers at waterholes for prime game-viewing', shoulder: 'green season — dramatic skies, newborn wildlife and lush plains' },
+  japan:    { peak: 'crisp, clear skies with cherry blossom or autumn colour', shoulder: 'quieter and atmospheric — pack layers for changeable weather' },
+  maldives: { peak: 'endless sun, calm lagoons and superb snorkelling visibility', shoulder: 'warm with passing showers — great value and quiet resorts' },
+}
+export function weatherInsight(country, months) {
+  const c = CLIMATE[country.key]
+  if (!c) return null
+  const sel = (months || []).filter((m) => m !== FLEXIBLE_MONTH)
+  let month, peak
+  if (sel.length) { month = sel.find((x) => country.bestMonths.includes(x)) || sel[0]; peak = country.bestMonths.includes(month) }
+  else { month = country.bestMonths[0]; peak = true } // flexible → show the sweet spot
+  return { emoji: peak ? '☀️' : '🌦️', month, peak, note: peak ? c.peak : c.shoulder }
+}
+
 // ── Activities (visual, image-based selection step) ────────────
 export const ACTIVITIES = [
   { key: 'beach',     label: 'Beaches & islands',    img: PHOTO('1518548419970-58e3b4079ab2'), vibes: ['relax', 'nature'] },

@@ -943,6 +943,16 @@
 }
 .ccard__tag--key { color: var(--brand-primary); background: var(--primary-scapia-000); border-color: var(--primary-scapia-100); }
 
+/* country detail — weather insight */
+.weather-note {
+  display: flex; align-items: flex-start; gap: 10px; margin-top: 14px;
+  padding: 12px 14px; border-radius: var(--r-md);
+  background: var(--secondary-blue-000); border: 1px solid var(--secondary-blue-100);
+  font: 400 13.5px/1.4 var(--font-body); color: var(--secondary-blue-700);
+}
+.weather-note b { font-weight: 700; color: var(--secondary-blue-800); }
+.weather-note__icn { font-size: 17px; line-height: 1.3; flex-shrink: 0; }
+
 /* country detail — match reasons */
 .matchrow {
   display: flex; align-items: center; gap: 10px; padding: 9px 0;
@@ -1044,6 +1054,14 @@
 }
 .cdeck-card__foot { position: absolute; left: 20px; right: 20px; bottom: 22px; z-index: 2; color: #fff; }
 .cdeck-card__name { font: 700 34px/1.05 var(--font-body); letter-spacing: -0.01em; margin-top: 2px; }
+.cdeck-weather {
+  display: flex; align-items: flex-start; gap: 8px; margin-top: 12px;
+  padding: 9px 11px; border-radius: var(--r-md);
+  background: rgba(255,255,255,0.14); backdrop-filter: blur(6px);
+  font: 500 12.5px/1.35 var(--font-body); color: #fff;
+}
+.cdeck-weather b { font-weight: 700; }
+.cdeck-weather__icn { font-size: 15px; line-height: 1.2; flex-shrink: 0; }
 .cdeck-card__reason { font: 700 10px/1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-top: 14px; }
 .cdeck-card__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .cdeck-tag {

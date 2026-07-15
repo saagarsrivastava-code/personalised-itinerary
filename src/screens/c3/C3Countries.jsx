@@ -4,7 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { Screen, AppBar } from '../../components/Chrome.jsx'
 import Icon from '../../components/Icon.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
-import { rankedCountries, matchTags, compareMatrix } from '../../data/c3.js'
+import { rankedCountries, matchTags, compareMatrix, weatherInsight } from '../../data/c3.js'
 
 export default function C3Countries() {
   const navigate = useNavigate()
@@ -124,6 +124,7 @@ function CountryFace({ r, top, bestKey }) {
   const { qual } = useC3()
   const tags = matchTags(country, qual)
   const perfect = top && country.key === bestKey
+  const weather = weatherInsight(country, qual.months)
   return (
     <>
       <div className="cdeck-card__photo" style={{ background: country.grad }}>
@@ -134,6 +135,12 @@ function CountryFace({ r, top, bestKey }) {
       <div className="cdeck-card__foot">
         <div className="t-lb-sm" style={{ color: 'rgba(255,255,255,0.82)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{country.country}</div>
         <h2 className="cdeck-card__name">{country.name}</h2>
+        {weather && (
+          <div className="cdeck-weather">
+            <span className="cdeck-weather__icn">{weather.emoji}</span>
+            <span><b>{weather.month}:</b> {weather.note}</span>
+          </div>
+        )}
         <div className="cdeck-card__reason">Why it's a match</div>
         <div className="cdeck-card__tags">
           {tags.slice(0, 4).map((t) => <span key={t} className="cdeck-tag">{t}</span>)}

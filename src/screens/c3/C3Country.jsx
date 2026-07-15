@@ -4,7 +4,7 @@ import { Screen } from '../../components/Chrome.jsx'
 import { Button } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
-import { getCountry, matchCountry, monthsLabel } from '../../data/c3.js'
+import { getCountry, matchCountry, monthsLabel, weatherInsight } from '../../data/c3.js'
 
 export default function C3Country() {
   const navigate = useNavigate()
@@ -16,6 +16,7 @@ export default function C3Country() {
 
   const { reasons } = matchCountry(country, qual)
   const monthsText = country.bestMonths.slice(0, 4).join(', ')
+  const weather = weatherInsight(country, qual.months)
 
   function viewItineraries() {
     setCountryKey(key)
@@ -37,6 +38,13 @@ export default function C3Country() {
 
         <div className="pad" style={{ marginTop: 18 }}>
           <p className="t-p-med" style={{ color: 'var(--content-primary)' }}>{country.blurb}</p>
+
+          {weather && (
+            <div className="weather-note">
+              <span className="weather-note__icn">{weather.emoji}</span>
+              <span><b>{weather.month} — {weather.peak ? 'a great time to visit' : 'shoulder season'}.</b> Expect {weather.note}.</span>
+            </div>
+          )}
 
           <h2 className="t-hd-sm" style={{ marginTop: 22 }}>Why it's a match for you</h2>
           <div style={{ marginTop: 12 }}>
