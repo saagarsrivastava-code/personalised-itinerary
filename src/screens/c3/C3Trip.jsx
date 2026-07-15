@@ -87,11 +87,14 @@ export default function C3Trip() {
 
   return (
     <Screen>
-      <div className="screen-body" style={{ paddingBottom: 16 }}>
+      <div className="screen-body" style={{ paddingBottom: 96 }}>
         <div className="detail-hero detail-hero--tall" style={{ background: itinerary.grad }}>
           <img className="detail-hero__img" src={itinerary.photo} alt="" draggable="false" onError={(e) => { e.currentTarget.style.display = 'none' }} />
           <div className="detail-hero__scrim" />
           <button className="detail-hero__back" onClick={() => navigate(`/c3/itineraries/${dest}`)} aria-label="Back"><Icon name="back" size={22} /></button>
+          <button className="detail-hero__book" onClick={() => setBookOpen(true)}>
+            <Icon name="wallet" size={15} /> Book · {inr(itinerary.price)}
+          </button>
           <div className="detail-hero__tags">
             {traitPills(itinerary).map((t, i) => <span key={i} className="itin-tag">{t}</span>)}
           </div>
@@ -174,10 +177,6 @@ export default function C3Trip() {
           <span className="fab__label">Ask AI</span>
         </motion.button>
       )}
-
-      <div className="footer">
-        <Button full onClick={() => setBookOpen(true)}>Book this trip on scapia</Button>
-      </div>
 
       {/* Booking sheet */}
       <Sheet open={bookOpen} onClose={() => setBookOpen(false)} height="56%">

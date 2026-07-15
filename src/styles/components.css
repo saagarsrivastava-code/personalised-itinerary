@@ -796,6 +796,14 @@
 }
 .detail-hero__save.is-on { background: var(--brand-primary); color: #fff; }
 .detail-hero__save:active { transform: scale(0.92); }
+.detail-hero__book {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--brand-primary); color: #fff;
+  border-radius: var(--r-pill); padding: 10px 16px;
+  font: 700 14px/1 var(--font-body); box-shadow: var(--shadow-cta);
+}
+.detail-hero__book:active { transform: scale(0.96); }
 .detail-hero__tags { position: absolute; top: 62px; left: 16px; right: 16px; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; }
 .detail-hero__cap { position: absolute; left: 20px; right: 20px; bottom: 20px; z-index: 2; color: #fff; }
 .detail-hero__title { font: 700 27px/1.12 var(--font-body); letter-spacing: -0.01em; margin-top: 4px; }
