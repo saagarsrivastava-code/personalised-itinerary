@@ -70,7 +70,7 @@ export default function C3Country() {
           </div>
 
           <div className="t-lb-sm muted" style={{ marginTop: 14 }}>
-            Your dates: {monthsLabel(qual.months)} · {qual.duration}
+            Your travel window: {monthsLabel(qual.months)}
           </div>
         </div>
       </div>

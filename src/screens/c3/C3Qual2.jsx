@@ -5,15 +5,15 @@ import { Button } from '../../components/ui.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
 import {
   BUDGET_MIN, BUDGET_MAX, BUDGET_STEP, budgetTier, inr,
-  DURATION_OPTIONS, C3_MONTHS, FLEXIBLE_MONTH, WEATHER_OPTIONS,
+  C3_MONTHS, FLEXIBLE_MONTH,
 } from '../../data/c3.js'
 import { QHead, QSection, Pill } from './qparts.jsx'
 
 export default function C3Qual2() {
   const navigate = useNavigate()
   const { qual, setQ, toggleMonth } = useC3()
-  const { budget, duration, months, weather } = qual
-  const ready = duration && months.length > 0 && weather
+  const { budget, months } = qual
+  const ready = months.length > 0
 
   return (
     <Screen>
@@ -27,23 +27,11 @@ export default function C3Qual2() {
             <BudgetRange value={budget} onChange={(v) => setQ('budget', v)} />
           </div>
 
-          <QSection title="How long is the trip?">
-            {DURATION_OPTIONS.map((d) => (
-              <Pill key={d} on={duration === d} onClick={() => setQ('duration', d)}>{d}</Pill>
-            ))}
-          </QSection>
-
-          <QSection title="How soon are you planning to travel?">
+          <QSection title="When are you planning to travel?">
             {C3_MONTHS.map((m) => (
               <Pill key={m} on={months.includes(m)} onClick={() => toggleMonth(m)}>{m}</Pill>
             ))}
             <Pill on={months.includes(FLEXIBLE_MONTH)} onClick={() => toggleMonth(FLEXIBLE_MONTH)}>{FLEXIBLE_MONTH}</Pill>
-          </QSection>
-
-          <QSection title="What weather sounds right?">
-            {WEATHER_OPTIONS.map((w) => (
-              <Pill key={w.key} on={weather === w.key} onClick={() => setQ('weather', w.key)}>{w.label}</Pill>
-            ))}
           </QSection>
         </motion.div>
       </div>

@@ -6,15 +6,19 @@ const C3Context = createContext(null)
 export function C3Provider({ children }) {
   // Phase 1 — qualitative (drives country recommendations)
   const [qual, setQual] = useState({
-    who: 'Couple',
-    vibe: 'relax',
-    reason: 'Vacation',
+    who: 'Couple',          // optional
+    vibes: ['relax'],       // multi-select
     budget: [50000, 150000],
-    duration: 'Short (4–6 days)',
     months: ['Apr'],
-    weather: 'beach',
   })
   const setQ = useCallback((key, value) => setQual((q) => ({ ...q, [key]: value })), [])
+
+  const toggleVibe = useCallback((key) => {
+    setQual((q) => ({
+      ...q,
+      vibes: q.vibes.includes(key) ? q.vibes.filter((v) => v !== key) : [...q.vibes, key],
+    }))
+  }, [])
 
   const toggleMonth = useCallback((m) => {
     setQual((q) => {
@@ -29,6 +33,7 @@ export function C3Provider({ children }) {
   // Phase 2 — quantitative (refines itineraries within a country)
   const [prefs, setPrefs] = useState({
     pace: 50,
+    duration: 'Short (4–6 days)',
     food: 'All cuisines',
     stays: ['4✭ Hotels'],
     transport: 'Private transfer',
@@ -46,11 +51,11 @@ export function C3Provider({ children }) {
 
   const value = useMemo(
     () => ({
-      qual, setQ, toggleMonth,
+      qual, setQ, toggleMonth, toggleVibe,
       prefs, setPref, toggleStay,
       countryKey, setCountryKey,
     }),
-    [qual, setQ, toggleMonth, prefs, setPref, toggleStay, countryKey],
+    [qual, setQ, toggleMonth, toggleVibe, prefs, setPref, toggleStay, countryKey],
   )
 
   return <C3Context.Provider value={value}>{children}</C3Context.Provider>

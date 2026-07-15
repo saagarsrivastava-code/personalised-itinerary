@@ -1003,6 +1003,11 @@
 .chat-suggests::-webkit-scrollbar { height: 0; }
 .chat-suggests .chip { flex-shrink: 0; white-space: nowrap; }
 
+.q-optional {
+  font: 500 11px/1 var(--font-body); color: var(--content-tertiary);
+  background: var(--bg-secondary); border-radius: var(--r-pill); padding: 4px 8px;
+}
+
 /* helpers */
 .stack-12 > * + * { margin-top: 12px; }
 .stack-8 > * + * { margin-top: 8px; }

@@ -352,15 +352,13 @@ export function getItinerary(destKey, id) {
 export function matchCountry(country, qual) {
   const reasons = []
   let score = 0
-  if (qual.vibe && country.vibes.includes(qual.vibe)) { score += 3; reasons.push(`Made for ${QUAL_VIBE_LABEL[qual.vibe].toLowerCase()}`) }
-  if (qual.weather === 'any') { score += 1 }
-  else if (qual.weather && country.weather.includes(qual.weather)) { score += 2; reasons.push(`${WEATHER_LABEL[qual.weather]} — exactly your kind of weather`) }
+  const vibeHits = (qual.vibes || []).filter((v) => country.vibes.includes(v))
+  vibeHits.forEach((v) => { score += 3; reasons.push(`Made for ${QUAL_VIBE_LABEL[v].toLowerCase()}`) })
   if (qual.months?.includes(FLEXIBLE_MONTH)) { score += 1; reasons.push('Flexible timing opens up the best windows here') }
   else if (qual.months?.length) {
     const overlap = country.bestMonths.filter((m) => qual.months.includes(m))
     if (overlap.length) { score += 2; reasons.push(`At its best in ${overlap.slice(0, 3).join(', ')}`) }
   }
-  if (qual.reason && country.reasons?.includes(qual.reason)) { score += 2; reasons.push(`A favourite for a ${qual.reason.toLowerCase()}`) }
   if (qual.who && country.goodFor?.includes(qual.who)) { score += 1; reasons.push(`Loved by a ${qual.who.toLowerCase()}`) }
   if (budgetBandOf(qual.budget || [50000, 150000]) === country.budgetBand) { score += 1; reasons.push('Sits right in your budget') }
   return { score, reasons }
@@ -378,13 +376,11 @@ const REASON_EMOJI = {
 
 export function matchTags(country, qual) {
   const t = []
-  if (qual.vibe && country.vibes.includes(qual.vibe)) t.push(`${VIBE_EMOJI[qual.vibe]} ${VIBE_SHORT[qual.vibe]}`)
-  if (qual.weather && qual.weather !== 'any' && country.weather.includes(qual.weather)) t.push(`${WEATHER_EMOJI[qual.weather]} ${WEATHER_SHORT[qual.weather]}`)
+  ;(qual.vibes || []).filter((v) => country.vibes.includes(v)).forEach((v) => t.push(`${VIBE_EMOJI[v]} ${VIBE_SHORT[v]}`))
   if (qual.months && !qual.months.includes(FLEXIBLE_MONTH)) {
     const overlap = country.bestMonths.filter((m) => qual.months.includes(m))
     if (overlap.length) t.push(`📅 Great in ${overlap[0]}`)
   }
-  if (qual.reason && country.reasons?.includes(qual.reason)) t.push(`${REASON_EMOJI[qual.reason] || '✨'} ${qual.reason}`)
   if (budgetBandOf(qual.budget || [50000, 150000]) === country.budgetBand) t.push('💰 In budget')
   if (qual.who && country.goodFor?.includes(qual.who)) t.push(`👥 ${qual.who}`)
   return t
@@ -399,7 +395,7 @@ export function rankedCountries(qual) {
 // Rank a country's itineraries against the chosen vibe + pace.
 export function rankItineraries(country, qual, prefs) {
   const wanted = []
-  if (qual?.vibe && VIBE_TO_TRAIT[qual.vibe]) wanted.push(VIBE_TO_TRAIT[qual.vibe])
+  ;(qual?.vibes || []).forEach((v) => { if (VIBE_TO_TRAIT[v]) wanted.push(VIBE_TO_TRAIT[v]) })
   if (prefs?.pace >= 65) wanted.push('packed')
   if (prefs?.pace <= 35) wanted.push('wellness')
   const score = (it) => it.traits.filter((t) => wanted.includes(t)).length

@@ -13,7 +13,7 @@ export default function C3Building({ mode = 'countries' }) {
 
   const lines = mode === 'countries'
     ? [
-        `Matching your love of ${QUAL_VIBE_LABEL[qual.vibe]?.toLowerCase() || 'travel'}…`,
+        `Matching your love of ${qual.vibes.map((v) => QUAL_VIBE_LABEL[v]?.toLowerCase()).filter(Boolean).slice(0, 2).join(' & ') || 'travel'}…`,
         `Scanning weather for ${monthsLabel(qual.months)}…`,
         `Fitting your ${inr(qual.budget[0])}–${inr(qual.budget[1])} budget…`,
         'Ranking the best-fit countries…',

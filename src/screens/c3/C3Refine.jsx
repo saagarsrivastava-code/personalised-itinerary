@@ -4,7 +4,7 @@ import { Screen, Footer } from '../../components/Chrome.jsx'
 import { Button } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
-import { getCountry, FOOD_OPTIONS, STAY_OPTIONS, TRANSPORT_OPTIONS } from '../../data/c3.js'
+import { getCountry, DURATION_OPTIONS, FOOD_OPTIONS, STAY_OPTIONS, TRANSPORT_OPTIONS } from '../../data/c3.js'
 import { QSection, Pill } from './qparts.jsx'
 
 export default function C3Refine() {
@@ -13,8 +13,8 @@ export default function C3Refine() {
   const country = getCountry(countryKey)
   if (!country) return <Navigate to="/c3/countries" replace />
 
-  const { pace, food, stays, transport } = prefs
-  const ready = !!food && stays.length > 0 && !!transport
+  const { pace, duration, food, stays, transport } = prefs
+  const ready = !!duration && !!food && stays.length > 0 && !!transport
 
   return (
     <Screen>
@@ -49,6 +49,10 @@ export default function C3Refine() {
               <input className="slider-input" type="range" min="0" max="100" step="5" value={pace} onChange={(e) => setPref('pace', Number(e.target.value))} aria-label="Travel pace" />
             </div>
           </div>
+
+          <QSection title="How long is the trip?">
+            {DURATION_OPTIONS.map((d) => <Pill key={d} on={duration === d} onClick={() => setPref('duration', d)}>{d}</Pill>)}
+          </QSection>
 
           <QSection title="What's your food preference?">
             {FOOD_OPTIONS.map((f) => <Pill key={f} on={food === f} onClick={() => setPref('food', f)}>{f}</Pill>)}
