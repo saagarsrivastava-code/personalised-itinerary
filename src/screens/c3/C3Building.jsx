@@ -4,14 +4,19 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Screen } from '../../components/Chrome.jsx'
 import Icon from '../../components/Icon.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
-import { QUAL_VIBE_LABEL, budgetTier, monthsLabel, rankedCountries } from '../../data/c3.js'
+import { QUAL_VIBE_LABEL, budgetTier, monthsLabel, rankedCountries, getCountry, rankItineraries } from '../../data/c3.js'
 
 export default function C3Building({ mode = 'countries' }) {
   const navigate = useNavigate()
   const { qual, prefs, countryKey } = useC3()
 
   if (mode === 'countries') return <SortingScreen qual={qual} onDone={() => navigate('/c3/countries')} />
-  return <OrbScreen prefs={prefs} onDone={() => navigate(`/c3/itineraries/${countryKey || 'bali'}`)} />
+
+  // Straight to the tailored itinerary — no intermediate list.
+  const dest = countryKey || 'bali'
+  const country = getCountry(dest)
+  const topId = country ? rankItineraries(country, qual, prefs)[0].id : null
+  return <OrbScreen prefs={prefs} onDone={() => navigate(`/c3/trip/${dest}/${topId}`)} />
 }
 
 /* Card-sorting animation for the qualitative → countries step */

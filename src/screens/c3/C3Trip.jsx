@@ -91,7 +91,7 @@ export default function C3Trip() {
     <Screen>
       {/* Sticky header — overlays the hero, gains a blurred bg on scroll */}
       <div className={`detail-topbar${scrolled ? ' is-scrolled' : ''}`}>
-        <button className="detail-topbar__back" onClick={() => navigate(`/c3/itineraries/${dest}`)} aria-label="Back"><Icon name="back" size={22} /></button>
+        <button className="detail-topbar__back" onClick={() => navigate('/c3/activities')} aria-label="Back"><Icon name="back" size={22} /></button>
         <div className="detail-topbar__title">{itinerary.title}</div>
         <button className="detail-topbar__book" onClick={() => setBookOpen(true)}>
           <Icon name="wallet" size={15} /> Book · {inr(total)}
