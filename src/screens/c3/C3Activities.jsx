@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Screen, Footer } from '../../components/Chrome.jsx'
 import { Button } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
@@ -12,8 +13,18 @@ export default function C3Activities() {
   const country = getCountry(countryKey)
   if (!country) return <Navigate to="/c3/countries" replace />
 
-  const activities = activitiesFor(country, qual)
+  const genres = activitiesFor(country, qual)
   const chosen = prefs.activities
+
+  // Genres matching the user's vibes open by default.
+  const [open, setOpen] = useState(() =>
+    new Set(genres.filter((g) => g.vibes.some((v) => qual.vibes.includes(v))).map((g) => g.key)),
+  )
+  const toggleOpen = (key) => setOpen((prev) => {
+    const next = new Set(prev)
+    next.has(key) ? next.delete(key) : next.add(key)
+    return next
+  })
 
   return (
     <Screen>
@@ -28,20 +39,47 @@ export default function C3Activities() {
       <div className="screen-body pad" style={{ paddingTop: 16, paddingBottom: 20 }}>
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
           <h1 className="q-title">What do you want to do?</h1>
-          <p className="t-p-small muted" style={{ marginTop: 4 }}>Pick the experiences to build into your {country.name} plan.</p>
+          <p className="t-p-small muted" style={{ marginTop: 4 }}>Optional — open a category and pick the experiences you'd like in your {country.name} plan.</p>
 
-          <div className="actgrid" style={{ marginTop: 18 }}>
-            {activities.map((a) => {
-              const on = chosen.includes(a.key)
+          <div style={{ marginTop: 18 }}>
+            {genres.map((g) => {
+              const isOpen = open.has(g.key)
+              const pickedInGenre = g.items.filter((it) => chosen.includes(`${g.key}:${it}`)).length
               return (
-                <button key={a.key} className={`actcard${on ? ' is-sel' : ''}`} onClick={() => toggleActivity(a.key)}>
-                  <div className="actcard__photo">
-                    <img src={a.img} alt="" loading="lazy" draggable="false" onError={(e) => { e.currentTarget.style.display = 'none' }} />
-                    <div className="actcard__scrim" />
-                    <span className={`actcard__check${on ? ' is-on' : ''}`}><Icon name="check" size={14} /></span>
-                  </div>
-                  <span className="actcard__label">{a.label}</span>
-                </button>
+                <div key={g.key} className={`acc${isOpen ? ' is-open' : ''}`}>
+                  <button className="acc__head" onClick={() => toggleOpen(g.key)}>
+                    <span className="acc__thumb" style={{ background: g.grad || 'var(--brand-dark)' }}>
+                      <img src={g.img} alt="" loading="lazy" draggable="false" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+                    </span>
+                    <span className="acc__label">
+                      {g.label}
+                      {pickedInGenre > 0 && <span className="acc__count">{pickedInGenre}</span>}
+                    </span>
+                    <span className="acc__chev"><Icon name="arrowDown" size={18} /></span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        className="acc__body"
+                        initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <div className="acc__items">
+                          {g.items.map((it) => {
+                            const key = `${g.key}:${it}`
+                            const on = chosen.includes(key)
+                            return (
+                              <button key={key} className={`acc-item${on ? ' is-sel' : ''}`} onClick={() => toggleActivity(key)}>
+                                <span className={`acc-item__check${on ? ' is-on' : ''}`}>{on && <Icon name="check" size={12} />}</span>
+                                {it}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               )
             })}
           </div>

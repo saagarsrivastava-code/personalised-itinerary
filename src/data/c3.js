@@ -349,18 +349,74 @@ export function getItinerary(destKey, id) {
 }
 
 // Why a country matches the qualitative answers — score + human reasons.
+// Per-destination detail on WHY it suits each vibe.
+const WHY_DETAIL = {
+  bali: {
+    relax: 'Beach-club afternoons in Seminyak, private pool villas and slow sunset dinners.',
+    nature: 'Rice-terrace walks, jungle waterfalls and the cliffs of Nusa Penida.',
+    wellness: 'Ubud yoga shalas, flower-bath spas and clean-eating cafés.',
+    food: 'Smoky satay streets, family warungs and beachfront seafood grills.',
+  },
+  thailand: {
+    food: 'Michelin street stalls, night markets and floating-market breakfasts.',
+    relax: 'Island beaches, longtail hops and unhurried down-days.',
+    adventure: 'Island-hopping, scuba diving and jungle ziplines.',
+    nature: 'Andaman lagoons, limestone karsts and national parks.',
+  },
+  vietnam: {
+    culture: 'Lantern-lit Hoi An, Hanoi’s old quarter and ancient citadels.',
+    food: 'Pho at dawn, banh-mi carts and egg-coffee on Train Street.',
+    adventure: 'The Ha Giang motorbike loop and kayaking through Ha Long.',
+    nature: 'Terraced highlands, karst bays and vast cave systems.',
+  },
+  africa: {
+    nature: 'Big-Five game drives, the Mara migration and Zanzibar’s reefs.',
+    adventure: 'Balloon safaris, guided bush walks and coastal diving.',
+  },
+  japan: {
+    culture: 'Kyoto temples, tea ceremonies and shrine-lined lanes.',
+    food: 'Sushi counters, izakaya nights and ramen alleys.',
+    nature: 'Cherry blossoms, alpine onsen towns and bamboo groves.',
+  },
+  maldives: {
+    relax: 'Overwater villas, private sandbanks and absolutely nothing to do.',
+    wellness: 'Spa pavilions over the lagoon and sunrise yoga decks.',
+  },
+}
+const WHO_NOTE = {
+  Solo: 'Safe, social and easy to get around on your own.',
+  Couple: 'Romantic without having to try too hard.',
+  'Family with kids': 'Plenty that keeps every age happy.',
+  'Friends group': 'Loads of options for a group that wants variety.',
+}
+
 export function matchCountry(country, qual) {
   const reasons = []
   let score = 0
-  const vibeHits = (qual.vibes || []).filter((v) => country.vibes.includes(v))
-  vibeHits.forEach((v) => { score += 3; reasons.push(`Made for ${QUAL_VIBE_LABEL[v].toLowerCase()}`) })
-  if (qual.months?.includes(FLEXIBLE_MONTH)) { score += 1; reasons.push('Flexible timing opens up the best windows here') }
-  else if (qual.months?.length) {
+  const why = WHY_DETAIL[country.key] || {}
+  ;(qual.vibes || []).filter((v) => country.vibes.includes(v)).forEach((v) => {
+    score += 3
+    reasons.push({ title: `Made for ${QUAL_VIBE_LABEL[v].toLowerCase()}`, detail: why[v] || '' })
+  })
+  if (qual.months?.includes(FLEXIBLE_MONTH)) {
+    score += 1
+    reasons.push({ title: 'Flexible timing works in your favour', detail: `You can aim straight for its best window — ${country.bestMonths.slice(0, 3).join(', ')}.` })
+  } else if (qual.months?.length) {
     const overlap = country.bestMonths.filter((m) => qual.months.includes(m))
-    if (overlap.length) { score += 2; reasons.push(`At its best in ${overlap.slice(0, 3).join(', ')}`) }
+    if (overlap.length) {
+      const w = CLIMATE[country.key]
+      score += 2
+      reasons.push({ title: `At its best in ${overlap.slice(0, 3).join(', ')}`, detail: w ? `Expect ${w.peak}.` : '' })
+    }
   }
-  if (qual.who && country.goodFor?.includes(qual.who)) { score += 1; reasons.push(`Loved by a ${qual.who.toLowerCase()}`) }
-  if (budgetBandOf(qual.budget || [50000, 150000]) === country.budgetBand) { score += 1; reasons.push('Sits right in your budget') }
+  if (qual.who && country.goodFor?.includes(qual.who)) {
+    score += 1
+    reasons.push({ title: `A favourite for a ${qual.who.toLowerCase()}`, detail: WHO_NOTE[qual.who] || '' })
+  }
+  if (budgetBandOf(qual.budget || [50000, 150000]) === country.budgetBand) {
+    score += 1
+    reasons.push({ title: 'Sits right in your budget', detail: `Great ${budgetTier(qual.budget || [50000, 150000]).toLowerCase()} trips here are easy to put together.` })
+  }
   return { score, reasons }
 }
 
@@ -428,16 +484,16 @@ export function weatherInsight(country, months) {
 
 // ── Activities (visual, image-based selection step) ────────────
 export const ACTIVITIES = [
-  { key: 'beach',     label: 'Beaches & islands',    img: PHOTO('1518548419970-58e3b4079ab2'), vibes: ['relax', 'nature'] },
-  { key: 'trek',      label: 'Treks & viewpoints',   img: PHOTO('1470240731273-7821a6eeb6bd'), vibes: ['adventure', 'nature'] },
-  { key: 'food',      label: 'Food trails',          img: PHOTO('1504674900247-0877df9cc836'), vibes: ['food'] },
-  { key: 'culture',   label: 'Temples & heritage',   img: PHOTO('1528127269322-539801943592'), vibes: ['culture'] },
-  { key: 'water',     label: 'Snorkel & dive',       img: PHOTO('1573843981267-be1999ff37cd'), vibes: ['nature', 'adventure'] },
-  { key: 'spa',       label: 'Spa & wellness',       img: PHOTO('1604999565976-8913ad2ddb7c'), vibes: ['wellness', 'relax'] },
-  { key: 'wildlife',  label: 'Wildlife & safari',    img: PHOTO('1516426122078-c23e76319801'), vibes: ['nature'] },
-  { key: 'scenic',    label: 'Scenic & photo spots', img: PHOTO('1573790387438-4da905039392'), vibes: ['nature', 'relax'] },
-  { key: 'market',    label: 'Markets & shopping',   img: PHOTO('1567337710282-00832b415979'), vibes: ['food', 'culture'] },
-  { key: 'nightlife', label: 'Nightlife & bars',     img: PHOTO('1552465011-b4e21bf6e79a'),    vibes: ['food'] },
+  { key: 'beach',     label: 'Beaches & islands',    img: PHOTO('1518548419970-58e3b4079ab2'), vibes: ['relax', 'nature'], items: ['Beach-club day', 'Sunset sail', 'Island-hopping boat trip', 'Hidden-cove swim'] },
+  { key: 'trek',      label: 'Treks & viewpoints',   img: PHOTO('1470240731273-7821a6eeb6bd'), vibes: ['adventure', 'nature'], items: ['Sunrise summit hike', 'Waterfall trek', 'Ridge viewpoint walk'] },
+  { key: 'food',      label: 'Food trails',          img: PHOTO('1504674900247-0877df9cc836'), vibes: ['food'], items: ['Street-food crawl', 'Cooking class', 'Local market tour', 'Chef’s-table dinner'] },
+  { key: 'culture',   label: 'Temples & heritage',   img: PHOTO('1528127269322-539801943592'), vibes: ['culture'], items: ['Temple & heritage tour', 'Old-town walking tour', 'Craft workshop', 'Evening cultural show'] },
+  { key: 'water',     label: 'Snorkel & dive',       img: PHOTO('1573843981267-be1999ff37cd'), vibes: ['nature', 'adventure'], items: ['Discover scuba', 'Reef snorkel trip', 'Sea-kayak the coast'] },
+  { key: 'spa',       label: 'Spa & wellness',       img: PHOTO('1604999565976-8913ad2ddb7c'), vibes: ['wellness', 'relax'], items: ['Full-day spa', 'Sunrise yoga', 'Traditional massage', 'Sound-healing session'] },
+  { key: 'wildlife',  label: 'Wildlife & safari',    img: PHOTO('1516426122078-c23e76319801'), vibes: ['nature'], items: ['Sunrise game drive', 'Nature-reserve visit', 'Birdwatching walk'] },
+  { key: 'scenic',    label: 'Scenic & photo spots', img: PHOTO('1573790387438-4da905039392'), vibes: ['nature', 'relax'], items: ['Golden-hour photo spots', 'Scenic drive', 'Viewpoint picnic'] },
+  { key: 'market',    label: 'Markets & shopping',   img: PHOTO('1567337710282-00832b415979'), vibes: ['food', 'culture'], items: ['Night market', 'Artisan shopping street', 'Souvenir bazaar'] },
+  { key: 'nightlife', label: 'Nightlife & bars',     img: PHOTO('1552465011-b4e21bf6e79a'),    vibes: ['food'], items: ['Rooftop bars', 'Beach-club night', 'Live-music venue'] },
 ]
 
 // Activities relevant to a country, user's vibes surfaced first.

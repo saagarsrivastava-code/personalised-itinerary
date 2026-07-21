@@ -50,12 +50,15 @@ export default function C3Country() {
           <div style={{ marginTop: 12 }}>
             {reasons.map((r, i) => (
               <motion.div
-                key={r} className="matchrow"
+                key={r.title} className="matchrow"
                 initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.25, delay: 0.05 + i * 0.06 }}
               >
                 <span className="matchrow__tick"><Icon name="check" size={13} /></span>
-                <span>{r}</span>
+                <div>
+                  <div className="matchrow__title">{r.title}</div>
+                  {r.detail && <div className="matchrow__detail">{r.detail}</div>}
+                </div>
               </motion.div>
             ))}
           </div>
