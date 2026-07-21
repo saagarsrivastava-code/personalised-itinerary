@@ -86,6 +86,12 @@ export const COUNTRIES = [
     budgetBand: 'mid', goodFor: ['Couple', 'Solo', 'Friends group'],
     reasons: ['Honeymoon', 'Vacation', 'Solo trip', 'Bachelor / ette'],
     blurb: 'Rice terraces, temple towns and beach clubs — Bali flexes from barefoot-luxe to backpacker without missing a beat.',
+    extra: [
+      { area: 'Uluwatu', stops: [st('10:00', 'Padang Padang beach morning', 'nature', tr('car', 25)), st('16:00', 'Single Fin cliff bar', 'food'), st('18:30', 'Uluwatu temple Kecak dance', 'culture')] },
+      { area: 'Ubud', stops: [st('09:00', 'Sacred Monkey Forest', 'nature', tr('walk', 8)), st('11:30', 'Luwak coffee plantation', 'food', tr('car', 20)), st('15:00', 'Tirta Empul water temple', 'culture')] },
+      { area: 'Sidemen', stops: [st('09:30', 'Sidemen rice-valley cycle', 'nature', tr('car', 40)), st('14:00', 'Local weaving village', 'culture')] },
+      { area: 'Departure', stops: [st('09:00', 'Morning spa & flower bath', 'stay'), st('12:00', 'Ubud art market souvenirs', 'food', tr('car', 60)), st('15:00', 'Transfer to Denpasar airport', 'transport')] },
+    ],
     itineraries: [
       {
         id: 'b1', title: 'Bali adventure tales', tag: 'Adventure based', tags: ['🏄 Adventure', '🌳 Nature'], traits: ['adventure', 'nature', 'packed'],
@@ -143,6 +149,12 @@ export const COUNTRIES = [
     budgetBand: 'mid', goodFor: ['Friends group', 'Couple', 'Solo'],
     reasons: ['Bachelor / ette', 'Vacation', 'Solo trip', 'Birthday / Anniversary'],
     blurb: 'Street-food capitals, island-hopping and legendary nights — Thailand is the easiest big trip you’ll ever plan.',
+    extra: [
+      { area: 'Phi Phi', stops: [st('08:30', 'Maya Bay + Pileh Lagoon', 'nature', tr('car', 20)), st('13:00', 'Bamboo Island snorkel', 'nature'), st('19:00', 'Beachfront seafood grill', 'food')] },
+      { area: 'Krabi', stops: [st('09:00', 'Railay rock-climbing intro', 'adventure', tr('walk', 15)), st('15:00', 'Emerald Pool & hot springs', 'nature')] },
+      { area: 'Phuket', stops: [st('10:00', 'Big Buddha viewpoint', 'culture', tr('car', 25)), st('16:00', 'Karon beach sunset', 'nature'), st('20:00', 'Phuket Old Town food walk', 'food')] },
+      { area: 'Departure', stops: [st('10:00', 'Café & last-minute shopping', 'food', tr('walk', 8)), st('13:00', 'Transfer to airport', 'transport')] },
+    ],
     itineraries: [
       {
         id: 't1', title: 'Thailand street eats', tag: 'Food based', tags: ['🍜 Food', '🌙 Nightlife'], traits: ['food', 'nightlife', 'hidden'],
@@ -183,6 +195,12 @@ export const COUNTRIES = [
     budgetBand: 'low', goodFor: ['Solo', 'Friends group', 'Couple'],
     reasons: ['Solo trip', 'Vacation', 'Bachelor / ette'],
     blurb: 'Lantern-lit old towns, motorbike passes and bowls of pho at dawn — Vietnam rewards the curious on any budget.',
+    extra: [
+      { area: 'Hoi An', stops: [st('08:00', 'Tra Que herb-village cycle', 'nature', tr('car', 15)), st('12:00', 'Cao lau cooking class', 'food'), st('18:00', 'Lantern boat on the Thu Bon', 'culture')] },
+      { area: 'Hue', stops: [st('09:00', 'Imperial Citadel', 'culture', tr('car', 30)), st('14:00', 'Thien Mu Pagoda & Perfume River', 'culture')] },
+      { area: 'Sapa', stops: [st('08:30', 'Muong Hoa valley trek', 'nature', tr('car', 40)), st('15:00', 'Hmong village homestay tea', 'culture')] },
+      { area: 'Departure', stops: [st('09:30', 'Local market & egg coffee', 'food'), st('12:00', 'Transfer to Da Nang airport', 'transport')] },
+    ],
     itineraries: [
       {
         id: 'v1', title: 'Old town Vietnam', tag: 'Culture & food', tags: ['🛕 Culture', '🍜 Food'], traits: ['culture', 'food', 'hidden'],
@@ -223,6 +241,13 @@ export const COUNTRIES = [
     budgetBand: 'high', goodFor: ['Couple', 'Family with kids'],
     reasons: ['Honeymoon', 'Vacation', 'Birthday / Anniversary'],
     blurb: 'Big-Five game drives, balloon safaris and wild coastlines — the trip that quietly outranks every other you take.',
+    extra: [
+      { area: 'Masai Mara', stops: [st('06:30', 'Full-day Big-Cat drive', 'nature', tr('car', 20)), st('13:00', 'Riverside bush lunch', 'food'), st('16:30', 'Sundowner on the plains', 'nature')] },
+      { area: 'Lake Nakuru', stops: [st('08:00', 'Flamingos & rhino sanctuary drive', 'nature', tr('car', 45)), st('15:00', 'Baboon Cliff viewpoint', 'nature')] },
+      { area: 'Nairobi', stops: [st('09:00', 'Giraffe Centre & elephant orphanage', 'nature', tr('car', 30)), st('14:00', 'Karen Blixen museum', 'culture')] },
+      { area: 'Zanzibar', stops: [st('10:00', 'Stone Town heritage walk', 'culture', tr('walk', 10)), st('16:00', 'Spice-farm tour', 'food')] },
+      { area: 'Departure', stops: [st('09:00', 'Beach morning & pack-up', 'nature'), st('12:00', 'Transfer to airport', 'transport')] },
+    ],
     itineraries: [
       {
         id: 'a1', title: 'The great Mara safari', tag: 'Safari classic', tags: ['🌳 Nature', '📍 Landmarks'], traits: ['nature', 'landmarks', 'adventure'],
@@ -263,6 +288,14 @@ export const COUNTRIES = [
     budgetBand: 'high', goodFor: ['Couple', 'Solo', 'Family with kids'],
     reasons: ['Honeymoon', 'Vacation', 'Birthday / Anniversary'],
     blurb: 'Neon cities, temple gardens and the world’s best food at every price point — precise, polite and endlessly deep.',
+    extra: [
+      { area: 'Tokyo', stops: [st('09:00', 'Meiji shrine & Harajuku', 'culture', tr('metro', 15)), st('13:00', 'Shibuya crossing & teamLab', 'landmarks'), st('19:00', 'Golden Gai bar-hop', 'food')] },
+      { area: 'Hakone', stops: [st('10:00', 'Lake Ashi & Owakudani ropeway', 'nature', tr('car', 25)), st('15:00', 'Open-air art museum', 'culture')] },
+      { area: 'Kyoto', stops: [st('08:00', 'Kinkaku-ji golden pavilion', 'culture', tr('metro', 20)), st('11:00', 'Nishiki market food street', 'food'), st('16:00', 'Gion geisha district walk', 'culture')] },
+      { area: 'Nara', stops: [st('09:00', 'Todai-ji & deer park', 'culture', tr('metro', 45)), st('14:00', 'Kasuga shrine lantern path', 'culture')] },
+      { area: 'Osaka', stops: [st('11:00', 'Osaka castle grounds', 'culture', tr('metro', 30)), st('19:00', 'Dotonbori street-food night', 'food')] },
+      { area: 'Departure', stops: [st('10:00', 'Depachika food-hall gifts', 'food'), st('13:00', 'Transfer to Kansai airport', 'transport')] },
+    ],
     itineraries: [
       {
         id: 'j1', title: 'Tokyo to Kyoto classics', tag: 'Culture & food', tags: ['🛕 Culture', '🍜 Food'], traits: ['culture', 'food', 'landmarks'],
@@ -303,6 +336,12 @@ export const COUNTRIES = [
     budgetBand: 'high', goodFor: ['Couple'],
     reasons: ['Honeymoon', 'Birthday / Anniversary', 'Vacation'],
     blurb: 'Overwater villas, house reefs and nowhere to be — the Maldives is the purest form of switching off there is.',
+    extra: [
+      { area: 'Baa Atoll', stops: [st('07:30', 'Sunrise yoga deck', 'stay'), st('11:00', 'Dolphin cruise', 'nature'), st('19:30', 'Sunset fizz on the sandbank', 'food')] },
+      { area: 'Baa Atoll', stops: [st('10:00', 'Hanifaru Bay snorkel', 'nature'), st('16:00', 'Castaway sandbank picnic', 'nature')] },
+      { area: 'Baa Atoll', stops: [st('09:00', 'Reef dive with turtles', 'nature'), st('17:00', 'Floating spa treatment', 'stay')] },
+      { area: 'Departure', stops: [st('09:00', 'Final reef swim', 'nature'), st('11:00', 'Seaplane transfer to Malé', 'transport')] },
+    ],
     itineraries: [
       {
         id: 'm1', title: 'Overwater honeymoon', tag: 'Chill trip', tags: ['🧘 Wellness', '🏄 Snorkel'], traits: ['wellness', 'nature'],
@@ -346,6 +385,21 @@ export function getCountry(key) { return COUNTRIES.find((c) => c.key === key) }
 export function getDestination(key) { return getCountry(key) } // alias
 export function getItinerary(destKey, id) {
   return getCountry(destKey)?.itineraries.find((it) => it.id === id)
+}
+
+// Expand an itinerary to its full night count: authored highlight days first,
+// then the country's extra day pool, renumbered and re-dated in sequence.
+const WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+function dateFor(i) { return `${WEEK[i % 7]} ${13 + i} Apr` }
+function areaOf(label) { const p = label.split('—'); return p[1] ? p[1].trim() : label.trim() }
+
+export function fullDays(country, itinerary) {
+  const nights = parseInt(itinerary.nights, 10) || itinerary.days.length
+  const combined = itinerary.days.map((d) => ({ area: areaOf(d.label), stops: d.stops }))
+  const extra = country?.extra || []
+  let i = 0
+  while (combined.length < nights && i < extra.length) { combined.push(extra[i]); i += 1 }
+  return combined.map((d, idx) => ({ label: `Day ${idx + 1} — ${d.area}`, date: dateFor(idx), stops: d.stops }))
 }
 
 // Why a country matches the qualitative answers — score + human reasons.

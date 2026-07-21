@@ -5,7 +5,7 @@ import { Screen } from '../../components/Chrome.jsx'
 import { Button, CategoryPill, Sheet } from '../../components/ui.jsx'
 import Icon from '../../components/Icon.jsx'
 import { useC3 } from '../../state/C3Context.jsx'
-import { getCountry, getItinerary, inr, traitPills, costTiles, monthsLabel } from '../../data/c3.js'
+import { getCountry, getItinerary, inr, traitPills, costTiles, monthsLabel, fullDays } from '../../data/c3.js'
 
 // Scripted AI edits — each applies to the live day list and cycles.
 const AI_ACTIONS = [
@@ -46,7 +46,7 @@ export default function C3Trip() {
 
   const country = getCountry(dest)
   const itinerary = getItinerary(dest, id)
-  const [days, setDays] = useState(() => (itinerary ? itinerary.days.map((d) => ({ ...d, stops: d.stops.map((s) => ({ ...s })) })) : []))
+  const [days, setDays] = useState(() => (itinerary ? fullDays(country, itinerary).map((d) => ({ ...d, stops: d.stops.map((s) => ({ ...s })) })) : []))
   const [bookOpen, setBookOpen] = useState(false)
   const [booked, setBooked] = useState(false)
   const [paying, setPaying] = useState(false)
