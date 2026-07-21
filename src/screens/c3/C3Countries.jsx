@@ -139,7 +139,9 @@ function CountryFace({ r, top, bestKey }) {
       <div className="cdeck-card__scrim" />
       {perfect && <span className="cdeck-card__badge">✦ Perfect match</span>}
       <div className="cdeck-card__foot">
-        <div className="t-lb-sm" style={{ color: 'rgba(255,255,255,0.82)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{country.country}</div>
+        {country.country !== country.name && (
+          <div className="t-lb-sm" style={{ color: 'rgba(255,255,255,0.82)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{country.country}</div>
+        )}
         <h2 className="cdeck-card__name">{country.name}</h2>
         {weather && (
           <div className="cdeck-weather">

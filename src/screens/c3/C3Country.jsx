@@ -31,7 +31,9 @@ export default function C3Country() {
           <div className="detail-hero__scrim" />
           <button className="detail-hero__back" onClick={() => navigate('/c3/countries')} aria-label="Back"><Icon name="back" size={22} /></button>
           <div className="detail-hero__cap">
-            <div className="t-lb-sm" style={{ color: 'rgba(255,255,255,0.82)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{country.country}</div>
+            {country.country !== country.name && (
+              <div className="t-lb-sm" style={{ color: 'rgba(255,255,255,0.82)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{country.country}</div>
+            )}
             <h1 className="detail-hero__title">{country.name}</h1>
           </div>
         </div>
