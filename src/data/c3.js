@@ -501,6 +501,23 @@ export function countryTeaser(country) {
   return country.vibes.slice(0, 2).map((v) => `${VIBE_EMOJI[v]} ${VIBE_SHORT[v]}`)
 }
 
+// Why a destination is being ruled out (the strongest miss vs the user's picks).
+export function whyNot(country, qual) {
+  // Prefer the most concrete miss so reasons vary across destinations.
+  if (qual.months && !qual.months.includes(FLEXIBLE_MONTH) && qual.months.length) {
+    const overlap = country.bestMonths.filter((m) => qual.months.includes(m))
+    if (!overlap.length) return `${qual.months[0]} isn't its best season`
+  }
+  const band = budgetBandOf(qual.budget || [50000, 150000])
+  if (band !== country.budgetBand) {
+    return country.budgetBand === 'high' ? 'pricier than your budget' : band === 'high' ? 'below where you want to spend' : 'off your budget band'
+  }
+  const vibeMiss = (qual.vibes || []).filter((v) => !country.vibes.includes(v))
+  if (vibeMiss.length) return `not the strongest for ${QUAL_VIBE_LABEL[vibeMiss[0]].toLowerCase()}`
+  if (qual.who && !country.goodFor?.includes(qual.who)) return `less suited to a ${qual.who.toLowerCase()}`
+  return 'a weaker overall match'
+}
+
 export function rankedCountries(qual) {
   return [...COUNTRIES]
     .map((c) => ({ country: c, ...matchCountry(c, qual) }))
